@@ -1,4 +1,9 @@
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import javax.swing.AbstractListModel;
 
 public class WetterWerteGUI extends javax.swing.JFrame {
@@ -64,6 +69,11 @@ public class WetterWerteGUI extends javax.swing.JFrame {
         jsLuftfeuchtigkeit.setMinorTickSpacing(10);
 
         btEinfügen.setText("Einfügen");
+        btEinfügen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEinfügenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,29 +132,18 @@ public class WetterWerteGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void onEinfuegen(){
-        
-    }
-    
-    public void onTempChange(){
-        
-    }
-    
-    public void onLuftChange(){
-        
-    }
-    
-    public void onSpeichern(){
-        
-    }
-    
-    public void onLaden(){
-        
-    }
-    
-    public void onExit(){
-        
-    }
+
+    private void btEinfügenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEinfügenActionPerformed
+       int temperatur = jsTemperatur.getValue();
+       int luftfeuchtigkeit = jsLuftfeuchtigkeit.getValue();
+       LocalDateTime ldt = LocalDateTime.now();
+       
+       
+       
+       WetterWert ww = new WetterWert(temperatur, luftfeuchtigkeit, ldt);
+       wm.add(ww);
+    }//GEN-LAST:event_btEinfügenActionPerformed
+   
   
     public static void main(String args[]) {
         
