@@ -16,6 +16,15 @@ public class WetterWert {
         this.zeitpunkt = zeitpunkt;
    
     }
+    public int getTemperatur(){
+        return temperatur;
+    }
+    public int getLuftfeuchigkeit(){
+        return luftfeuchtigkeit;
+    }
+    public LocalDateTime getZeitpunkt(){
+        return zeitpunkt;
+    }
     
     public String toString(){
         DateTimeFormatter dtfZ = DateTimeFormatter.ofPattern("dd.MM - hh:mm:ss");

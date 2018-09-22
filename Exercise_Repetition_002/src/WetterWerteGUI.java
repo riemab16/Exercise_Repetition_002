@@ -1,10 +1,12 @@
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import javax.swing.AbstractListModel;
+import javax.swing.JFileChooser;
 
 public class WetterWerteGUI extends javax.swing.JFrame {
         private WetterModell wm = new WetterModell();
@@ -33,6 +35,10 @@ public class WetterWerteGUI extends javax.swing.JFrame {
         lbLuftfeuchtigkeit = new javax.swing.JLabel();
         jsLuftfeuchtigkeit = new javax.swing.JSlider();
         btEinfügen = new javax.swing.JButton();
+        mbDatei = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        miLaden = new javax.swing.JMenuItem();
+        miSpeichern = new javax.swing.JMenuItem();
 
         jLabel5.setText("jLabel5");
 
@@ -55,6 +61,11 @@ public class WetterWerteGUI extends javax.swing.JFrame {
 
         jsTemperatur.setMajorTickSpacing(10);
         jsTemperatur.setMinorTickSpacing(5);
+        jsTemperatur.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jsTemperaturStateChanged(evt);
+            }
+        });
 
         jLabel4.setText("Luftfeuchtigkeit:");
 
@@ -67,6 +78,11 @@ public class WetterWerteGUI extends javax.swing.JFrame {
 
         jsLuftfeuchtigkeit.setMajorTickSpacing(20);
         jsLuftfeuchtigkeit.setMinorTickSpacing(10);
+        jsLuftfeuchtigkeit.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jsLuftfeuchtigkeitStateChanged(evt);
+            }
+        });
 
         btEinfügen.setText("Einfügen");
         btEinfügen.addActionListener(new java.awt.event.ActionListener() {
@@ -74,6 +90,28 @@ public class WetterWerteGUI extends javax.swing.JFrame {
                 btEinfügenActionPerformed(evt);
             }
         });
+
+        jMenu1.setText("File");
+
+        miLaden.setText("Datei-laden");
+        miLaden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miLadenActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miLaden);
+
+        miSpeichern.setText("Datei-speichern");
+        miSpeichern.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSpeichernActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miSpeichern);
+
+        mbDatei.add(jMenu1);
+
+        setJMenuBar(mbDatei);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,10 +143,11 @@ public class WetterWerteGUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -124,7 +163,7 @@ public class WetterWerteGUI extends javax.swing.JFrame {
                         .addComponent(jsLuftfeuchtigkeit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btEinfügen, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 35, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addContainerGap())))
@@ -137,12 +176,36 @@ public class WetterWerteGUI extends javax.swing.JFrame {
        int temperatur = jsTemperatur.getValue();
        int luftfeuchtigkeit = jsLuftfeuchtigkeit.getValue();
        LocalDateTime ldt = LocalDateTime.now();
-       
-       
-       
+      
        WetterWert ww = new WetterWert(temperatur, luftfeuchtigkeit, ldt);
-       wm.add(ww);
+       wm.add(ww);  
     }//GEN-LAST:event_btEinfügenActionPerformed
+
+    private void jsTemperaturStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsTemperaturStateChanged
+       int temperatur = jsTemperatur.getValue();
+       
+       lbTemperatur.setText(temperatur +"°");
+    }//GEN-LAST:event_jsTemperaturStateChanged
+
+    private void jsLuftfeuchtigkeitStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsLuftfeuchtigkeitStateChanged
+        int luftfeuchtigkeit = jsLuftfeuchtigkeit.getValue();
+        
+        lbLuftfeuchtigkeit.setText(luftfeuchtigkeit +"%");
+    }//GEN-LAST:event_jsLuftfeuchtigkeitStateChanged
+
+    private void miLadenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLadenActionPerformed
+        WetterModell.load();
+    }//GEN-LAST:event_miLadenActionPerformed
+
+    private void miSpeichernActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSpeichernActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        int res = chooser.showOpenDialog(null);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            File f = chooser.getSelectedFile();
+            wm.save(f);
+        }
+        
+    }//GEN-LAST:event_miSpeichernActionPerformed
    
   
     public static void main(String args[]) {
@@ -184,11 +247,15 @@ public class WetterWerteGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSlider jsLuftfeuchtigkeit;
     private javax.swing.JSlider jsTemperatur;
     private javax.swing.JLabel lbLuftfeuchtigkeit;
     private javax.swing.JLabel lbTemperatur;
     private javax.swing.JList<String> liAnzeige;
+    private javax.swing.JMenuBar mbDatei;
+    private javax.swing.JMenuItem miLaden;
+    private javax.swing.JMenuItem miSpeichern;
     // End of variables declaration//GEN-END:variables
 }
